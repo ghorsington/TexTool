@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexTool", "TexTool\TexTool.csproj", "{78319852-E164-4B54-9ED0-3D8C1387877C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78319852-E164-4B54-9ED0-3D8C1387877C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78319852-E164-4B54-9ED0-3D8C1387877C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78319852-E164-4B54-9ED0-3D8C1387877C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78319852-E164-4B54-9ED0-3D8C1387877C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F70B5CB1-25D5-4DB1-A6E2-DD99B374EF4C}
+	EndGlobalSection
+EndGlobal

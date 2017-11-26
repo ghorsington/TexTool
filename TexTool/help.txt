@@ -1,0 +1,15 @@
+﻿TexTool {0}
+A tool (and a mini-library) to convert CM3D2 TEX files.
+
+Usage:
+
+{1}.exe <files or folders>
+
+You can also drag-and-drop folder/files onto the tool.
+
+How it works:
+
+All provided .tex files are converted to .png.
+All provided valid image files (png, jpg, etc.) are converted to PNG and saved as .tex version 1010.
+
+All output is put into the "output" folder.
