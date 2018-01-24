@@ -1,20 +1,42 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexTool", "TexTool\TexTool.csproj", "{78319852-E164-4B54-9ED0-3D8C1387877C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CM3D2.TexTool", "CM3D2.TexTool\CM3D2.TexTool.vcxproj", "{272FDB43-98DC-46B0-A3A9-E3008729A505}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "squish", "squish\vs9\squish\squish.vcxproj", "{6A8518C3-D81A-4428-BD7F-C37933088AC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{78319852-E164-4B54-9ED0-3D8C1387877C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78319852-E164-4B54-9ED0-3D8C1387877C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78319852-E164-4B54-9ED0-3D8C1387877C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78319852-E164-4B54-9ED0-3D8C1387877C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{272FDB43-98DC-46B0-A3A9-E3008729A505}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{272FDB43-98DC-46B0-A3A9-E3008729A505}.Debug|x64.ActiveCfg = Debug|x64
+		{272FDB43-98DC-46B0-A3A9-E3008729A505}.Debug|x64.Build.0 = Debug|x64
+		{272FDB43-98DC-46B0-A3A9-E3008729A505}.Debug|x86.ActiveCfg = Debug|Win32
+		{272FDB43-98DC-46B0-A3A9-E3008729A505}.Debug|x86.Build.0 = Debug|Win32
+		{272FDB43-98DC-46B0-A3A9-E3008729A505}.Release|Any CPU.ActiveCfg = Release|Win32
+		{272FDB43-98DC-46B0-A3A9-E3008729A505}.Release|x64.ActiveCfg = Release|x64
+		{272FDB43-98DC-46B0-A3A9-E3008729A505}.Release|x64.Build.0 = Release|x64
+		{272FDB43-98DC-46B0-A3A9-E3008729A505}.Release|x86.ActiveCfg = Release|Win32
+		{272FDB43-98DC-46B0-A3A9-E3008729A505}.Release|x86.Build.0 = Release|Win32
+		{6A8518C3-D81A-4428-BD7F-C37933088AC1}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{6A8518C3-D81A-4428-BD7F-C37933088AC1}.Debug|x64.ActiveCfg = Debug|x64
+		{6A8518C3-D81A-4428-BD7F-C37933088AC1}.Debug|x64.Build.0 = Debug|x64
+		{6A8518C3-D81A-4428-BD7F-C37933088AC1}.Debug|x86.ActiveCfg = Debug|Win32
+		{6A8518C3-D81A-4428-BD7F-C37933088AC1}.Debug|x86.Build.0 = Debug|Win32
+		{6A8518C3-D81A-4428-BD7F-C37933088AC1}.Release|Any CPU.ActiveCfg = Release|Win32
+		{6A8518C3-D81A-4428-BD7F-C37933088AC1}.Release|x64.ActiveCfg = Release|x64
+		{6A8518C3-D81A-4428-BD7F-C37933088AC1}.Release|x64.Build.0 = Release|x64
+		{6A8518C3-D81A-4428-BD7F-C37933088AC1}.Release|x86.ActiveCfg = Release|Win32
+		{6A8518C3-D81A-4428-BD7F-C37933088AC1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
