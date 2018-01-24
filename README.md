@@ -4,7 +4,7 @@
 
 ### Tool
 
-This tool can be used to convert between CM3D2's TEX image format and PNG.
+This tool can be used to convert between CM3D2's and COM3D2's TEX image format and PNG.
 
 The tool supports CM3D2 TEX version 1000 to 1010 format.
 The following pixel formats are supported:
@@ -14,7 +14,7 @@ The following pixel formats are supported:
 * DXT1
 * DXT5
 
-These are the all formats used by current version of CM3D2 (1.53) and COM3D2 (Trial).
+These are the all formats used by current version of CM3D2 and COM3D2.
 More formats are to be added as need be.
 
 ### Library
@@ -41,4 +41,6 @@ All output is added to `output` folder.
 Of course, replace `<files or folders>` with paths to files or folders separated by a space.
 Use double quotes if a path contains spaces.
 
-As of right now, all output is added to `output` folder. Expect configuration flags in the future versions.
+The output is put in the same folder as the input file.
+
+Currently the tool does not contain any special flags, but that might change in future.

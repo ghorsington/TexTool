@@ -52,7 +52,4 @@
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="help.txt" />
-  </ItemGroup>
 </Project>
