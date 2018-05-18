@@ -7,6 +7,7 @@ using namespace System::Drawing::Imaging;
 using namespace System::Runtime::InteropServices;
 using namespace System::IO;
 using namespace System::Collections::Generic;
+using namespace System::Globalization;
 using namespace System;
 
 namespace TexTool
@@ -25,12 +26,14 @@ namespace TexTool
     {
         this->_internalPath = String::Empty;
         this->image = image;
+		this->uvRects = nullptr;
     }
 
     Texture::Texture(squish::u8* bgra, int width, int height)
     {
         this->_internalPath = String::Empty;
         this->bgra = bgra;
+		this->uvRects = nullptr;
         image = gcnew Bitmap(width, height, width * 4, PixelFormat::Format32bppArgb, IntPtr(bgra));
         InternalPath = String::Empty;
     }
@@ -81,9 +84,19 @@ namespace TexTool
         auto width = 0;
         auto height = 0;
         auto texFormat = TextureFormat::ARGB32;
+		array<Rect^>^ rects = nullptr;
 
         if (version >= 1010)
         {
+			if(version >= 1011)
+			{
+				auto rectCount = br->ReadInt32();
+
+				rects = gcnew array<Rect^>(rectCount);
+
+				for(int i = 0; i < rectCount; i++)
+					rects[i] = gcnew Rect(br->ReadSingle(), br->ReadSingle(), br->ReadSingle(), br->ReadSingle());
+			}
             width = br->ReadInt32();
             height = br->ReadInt32();
             texFormat = (TextureFormat)br->ReadInt32();
@@ -109,6 +122,7 @@ namespace TexTool
         {
             tex = loader(data, width, height, texFormat);
             tex->InternalPath = originalPath;
+			tex->UvRects = rects;
         }
         else
             throw gcnew FileLoadException(String::Format("Loader for format {0} is not yet implemented.", texFormat));
@@ -158,7 +172,6 @@ namespace TexTool
         return gcnew Texture(img);
     }
 
-
     void Texture::Save(String^ file)
     {
         if (image == nullptr)
@@ -175,19 +188,71 @@ namespace TexTool
     void Texture::SaveImage(String^ file)
     {
         image->Save(file);
+
+		if(uvRects != nullptr)
+		{
+			auto uvFilePath = Path::Combine(Path::GetDirectoryName(file), String::Format("{0}.uv.csv", Path::GetFileNameWithoutExtension(file)));
+			auto uvFile = File::CreateText(uvFilePath);
+
+			for each (auto rect in uvRects)
+				uvFile->WriteLine(String::Format("{0}; {1}; {2}; {3}", rect->x, rect->y, rect->w, rect->h));
+			uvFile->Flush();
+
+			delete uvFile;
+		}
     }
 
     void Texture::SaveTex(String^ file)
     {
-        MemoryStream^ ms = gcnew MemoryStream();
+        auto uvFilePath = Path::Combine(Path::GetDirectoryName(file), String::Format("{0}.uv.csv", Path::GetFileNameWithoutExtension(file)));
+
+		auto uvList = gcnew List<Rect^>();
+
+		if(File::Exists(uvFilePath))
+		{
+			for each (auto line in File::ReadAllLines(uvFilePath))
+			{
+				line = line->Trim();
+				if (line->Length == 0)
+					continue;
+
+				auto parts = line->Split(gcnew array<wchar_t>{';'}, StringSplitOptions::RemoveEmptyEntries);
+
+				if (parts->Length != 4)
+					continue;
+
+				try
+				{
+					auto ci = CultureInfo::InvariantCulture;
+					uvList->Add(gcnew Rect(float::Parse(parts[0], ci), float::Parse(parts[1], ci), float::Parse(parts[2], ci), float::Parse(parts[3], ci)));
+				} 
+				catch(Exception^ e)
+				{
+					continue;
+				}
+			}
+		}
+
+    	MemoryStream^ ms = gcnew MemoryStream();
         image->Save(ms, ImageFormat::Png);
         array<unsigned char>^ data = ms->ToArray();
 
         BinaryWriter^ bw = gcnew BinaryWriter(File::Create(file));
 
         bw->Write(TEX_TAG);
-        bw->Write(OUTPUT_TEX_VERSION);
+        bw->Write(uvList->Count > 0 ? 1011 : 1010);
         bw->Write(InternalPath);
+		if(uvList->Count > 0)
+		{
+			bw->Write(uvList->Count);
+			for each (auto rect in uvList)
+			{
+				bw->Write(rect->x);
+				bw->Write(rect->y);
+				bw->Write(rect->w);
+				bw->Write(rect->h);
+			}
+		}
         bw->Write(image->Width);
         bw->Write(image->Height);
         bw->Write((int)TextureFormat::ARGB32);

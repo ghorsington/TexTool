@@ -18,6 +18,19 @@ namespace TexTool
         DXT5 = 12
     };
 
+	public ref class Rect
+	{
+	public:
+		float x, y, w, h;
+		Rect(float x, float y, float w, float h)
+		{
+			this->x = x;
+			this->y = y;
+			this->w = w;
+			this->h = h;
+		}
+	};
+
     public ref class Texture
     {
         public:
@@ -48,12 +61,26 @@ namespace TexTool
                 }
             }
 
+			property array<Rect^>^ UvRects
+			{
+				array<Rect^>^ get()
+				{
+					return uvRects;
+				}
+
+				void set(array<Rect^>^  val)
+				{
+					uvRects = val;
+				}
+			}
+
         private:
             literal String^ TEX_TAG = "CM3D2_TEX";
             literal int OUTPUT_TEX_VERSION = 1010;
             static initonly Dictionary<TextureFormat, TextureLoader^>^ TextureLoaders;
             String^ _internalPath;
             Image ^ image;
+			array<Rect^>^ uvRects;
             squish::u8* bgra;
 
             Texture(Image^ image);
