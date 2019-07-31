@@ -147,9 +147,9 @@ namespace TexTool
                 throw gcnew FormatException("The texture format is not a DXT format.");
         }
 
-        auto rgba = new squish::u8[squish::GetStorageRequirements(width, height, squishFlags)];
+        auto rgba = new squish::u8[width * height * 4];
         pin_ptr<unsigned char> dPtr = &data[0];
-        squish::DecompressImage(0, width, height, (void*)dPtr, squishFlags);
+        squish::DecompressImage(rgba, width, height, (void*)dPtr, squishFlags);
 
         for (int i = 0; i < width * height; i++)
         {
