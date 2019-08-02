@@ -142,6 +142,7 @@ namespace TexTool
 
             case TextureFormat::DXT5:
                 squishFlags |= squish::kDxt5;
+				break;
 
             default:
                 throw gcnew FormatException("The texture format is not a DXT format.");
