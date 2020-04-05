@@ -4,25 +4,7 @@
     <e p="C:\Users\denis\.Rider2019.3\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\denis\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_TexTool.-912680637.00" t="ExcludeRecursive" />
     <e p="C:\Users\denis\OneDrive\Documents\Projects\C#\COM\TexTool" t="IncludeFlat">
-      <e p="CM3D2.TexTool" t="IncludeRecursive">
-        <e p="app.ico" t="Include" />
-        <e p="app.rc" t="Include" />
-        <e p="AssemblyInfo.cpp" t="Include" />
-        <e p="CM3D2.TexTool.vcxproj" t="IncludeRecursive" />
-        <e p="Debug" t="ExcludeRecursive" />
-        <e p="help.h" t="Include" />
-        <e p="Program.cpp" t="Include" />
-        <e p="resource.h" t="Include" />
-        <e p="stdafx.cpp" t="Include" />
-        <e p="stdafx.h" t="Include" />
-        <e p="Texture.cpp" t="Include" />
-        <e p="Texture.h" t="Include" />
-      </e>
-      <e p="Debug" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
-      <e p="squish\vs9\squish" t="IncludeRecursive">
-        <e p="squish.vcxproj" t="IncludeRecursive" />
-      </e>
       <e p="TexTool" t="IncludeRecursive">
         <e p="app.ico" t="Include" />
         <e p="bin" t="ExcludeRecursive" />

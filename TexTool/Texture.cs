@@ -30,7 +30,7 @@ namespace TexTool
                 [TextureFormat.Dxt5] = ConvertFromDxt
             };
 
-        public static void Convert(string fileName)
+        public static void Convert(string fileName, bool overwrite)
         {
             if (!File.Exists(fileName))
                 throw new FileNotFoundException("Texture file not found", fileName);
@@ -38,12 +38,12 @@ namespace TexTool
             var ext = Path.GetExtension(fileName);
 
             if (ext == ".tex")
-                TexToImg(fileName);
+                TexToImg(fileName, overwrite);
             else
-                ImgToTex(fileName);
+                ImgToTex(fileName, overwrite);
         }
 
-        private static void ImgToTex(string texFileName)
+        private static void ImgToTex(string texFileName, bool overwrite)
         {
             using var img = Image.FromFile(texFileName);
 
@@ -84,7 +84,7 @@ namespace TexTool
 
             var dirName = Path.GetDirectoryName(texFileName) ?? ".";
             var fileName = Path.GetFileNameWithoutExtension(texFileName);
-            if (ShouldRenameTarget(fileName, "tex", out var movedFileName))
+            if (!overwrite && ShouldRenameTarget(fileName, "tex", out var movedFileName))
                 File.Move(Path.Combine(dirName, $"{fileName}.tex"), Path.Combine(dirName, movedFileName));
 
             var outputName = Path.Combine(dirName, $"{fileName}.tex");
@@ -113,7 +113,7 @@ namespace TexTool
             bw.Write(data);
         }
 
-        private static void TexToImg(string texFileName)
+        private static void TexToImg(string texFileName, bool overwrite)
         {
             using var br = new BinaryReader(File.OpenRead(texFileName));
             var tag = br.ReadString();
@@ -172,7 +172,7 @@ namespace TexTool
 
             var dirName = Path.GetDirectoryName(texFileName) ?? ".";
             var fileName = Path.GetFileNameWithoutExtension(texFileName);
-            if (ShouldRenameTarget(fileName, "png", out var movedFileName))
+            if (!overwrite && ShouldRenameTarget(fileName, "png", out var movedFileName))
             {
                 var oldTarget = Path.Combine(dirName, $"{fileName}.png");
                 var newTarget = Path.Combine(dirName, movedFileName);
