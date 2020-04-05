@@ -9,17 +9,17 @@
         <e p="app.rc" t="Include" />
         <e p="AssemblyInfo.cpp" t="Include" />
         <e p="CM3D2.TexTool.vcxproj" t="IncludeRecursive" />
+        <e p="Debug" t="ExcludeRecursive" />
         <e p="help.h" t="Include" />
         <e p="Program.cpp" t="Include" />
-        <e p="Release" t="ExcludeRecursive" />
         <e p="resource.h" t="Include" />
         <e p="stdafx.cpp" t="Include" />
         <e p="stdafx.h" t="Include" />
         <e p="Texture.cpp" t="Include" />
         <e p="Texture.h" t="Include" />
       </e>
+      <e p="Debug" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
-      <e p="Release" t="ExcludeRecursive" />
       <e p="squish\vs9\squish" t="IncludeRecursive">
         <e p="squish.vcxproj" t="IncludeRecursive" />
       </e>

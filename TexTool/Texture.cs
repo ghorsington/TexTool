@@ -85,7 +85,7 @@ namespace TexTool
             var dirName = Path.GetDirectoryName(texFileName) ?? ".";
             var fileName = Path.GetFileNameWithoutExtension(texFileName);
             if (ShouldRenameTarget(fileName, "tex", out var movedFileName))
-                File.Move(texFileName, Path.Combine(dirName, movedFileName));
+                File.Move(Path.Combine(dirName, $"{fileName}.tex"), Path.Combine(dirName, movedFileName));
 
             var outputName = Path.Combine(dirName, $"{fileName}.tex");
             using var bw = new BinaryWriter(File.Create(outputName));
@@ -166,16 +166,17 @@ namespace TexTool
 
             if (version == 1000)
             {
-                width = BitConverter.ToInt32(data, 8 + 4 + 4);
-                height = BitConverter.ToInt32(data, 8 + 4 + 4 + 4);
+                width = (data[16] << 24) | (data[17] << 16) | (data[18] << 8) | data[19];
+                height = (data[20] << 24) | (data[21] << 16) | (data[22] << 8) | data[23];
             }
 
             var dirName = Path.GetDirectoryName(texFileName) ?? ".";
             var fileName = Path.GetFileNameWithoutExtension(texFileName);
             if (ShouldRenameTarget(fileName, "png", out var movedFileName))
             {
+                var oldTarget = Path.Combine(dirName, $"{fileName}.png");
                 var newTarget = Path.Combine(dirName, movedFileName);
-                File.Move(texFileName, newTarget);
+                File.Move(oldTarget, newTarget);
                 var uvRectsPath = $"{fileName}.uv.csv";
                 if (File.Exists(uvRectsPath)) File.Move(uvRectsPath, $"{newTarget}.uv.csv");
             }
@@ -197,9 +198,9 @@ namespace TexTool
 
         private static bool ShouldRenameTarget(string fileNameNoExt, string newExt, out string movedFileName)
         {
-            var ext = Path.GetExtension(fileNameNoExt)?.Substring(1);
+            var ext = Path.GetExtension(fileNameNoExt);
 
-            if (!string.IsNullOrEmpty(ext) && int.TryParse(ext, out _))
+            if (!string.IsNullOrEmpty(ext) && int.TryParse(ext.Substring(1), out _))
                 fileNameNoExt = Path.GetFileNameWithoutExtension(fileNameNoExt);
 
             var attempt = 0;
@@ -213,11 +214,9 @@ namespace TexTool
 
         private static void ConvertFromPng(string file, byte[] data, int width, int height, TextureFormat format)
         {
-            var ms = new MemoryStream(data);
-            var img = Image.FromStream(ms);
+            using var ms = new MemoryStream(data);
+            using var img = Image.FromStream(ms);
             img.Save(file);
-            img.Dispose();
-            ms.Dispose();
         }
 
         private static void ConvertFromDxt(string file, byte[] data, int width, int height, TextureFormat format)
