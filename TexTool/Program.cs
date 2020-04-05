@@ -106,6 +106,9 @@ namespace TexTool
                 if (count < 0)
                     return;
             }
+
+            if (parenStart == procName.Length - 1)
+                return;
             
             var argsString = procName.Substring(parenStart + 1, procName.Length - parenStart - 2);
 
