@@ -87,30 +87,15 @@ namespace TexTool
         {
             var procName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
 
-            var count = 0;
-            var parenStart = procName.Length - 1;
-            for (var i = procName.Length - 1; i >= 0; i--)
-            {
-                switch (procName[i])
-                {
-                    case ')':
-                        count++;
-                        break;
-                    case '(':
-                        count--;
-                        parenStart = i;
-                        break;
-                }
-                
-                // Mismatched parentheses, stop
-                if (count < 0)
-                    return;
-            }
+            if (!procName.EndsWith(")"))
+                return;
 
-            if (parenStart == procName.Length - 1)
+            var first = procName.IndexOf("(", StringComparison.InvariantCultureIgnoreCase);
+
+            if (first == -1)
                 return;
             
-            var argsString = procName.Substring(parenStart + 1, procName.Length - parenStart - 2);
+            var argsString = procName.Substring(first + 1, procName.Length - first - 2);
 
             if (string.IsNullOrEmpty(argsString))
                 return;
