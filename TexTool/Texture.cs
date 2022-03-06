@@ -45,7 +45,9 @@ namespace TexTool
 
         private static void ImgToTex(string texFileName, bool overwrite)
         {
-            using var img = Image.FromFile(texFileName);
+            var img = Image.FromFile(texFileName);
+            var width = img.Width;
+            var height = img.Height;
 
             var rects = new List<Rect>();
             var rectsPath = $"{texFileName}.uv.csv";
@@ -79,7 +81,19 @@ namespace TexTool
                 }
 
             using var ms = new MemoryStream();
-            img.Save(ms, ImageFormat.Png);
+            // Hack to handle PNGs correctly: if the input is PNG, copy-paste it as-is to preserve the format
+            // TODO: Maybe use proper image processing library
+            if (!Equals(img.RawFormat, ImageFormat.Png))
+            {
+                img.Save(ms, ImageFormat.Png);
+                img.Dispose();
+            }
+            else
+            {
+                img.Dispose();
+                using var fs = File.Open(texFileName, FileMode.Open);
+                fs.CopyTo(ms);
+            }
             var data = ms.ToArray();
 
             var dirName = Path.GetDirectoryName(texFileName) ?? ".";
@@ -106,8 +120,8 @@ namespace TexTool
                 }
             }
 
-            bw.Write(img.Width);
-            bw.Write(img.Height);
+            bw.Write(width);
+            bw.Write(height);
             bw.Write((int) TextureFormat.Argb32);
             bw.Write(data.Length);
             bw.Write(data);
@@ -214,9 +228,10 @@ namespace TexTool
 
         private static void ConvertFromPng(string file, byte[] data, int width, int height, TextureFormat format)
         {
-            using var ms = new MemoryStream(data);
-            using var img = Image.FromStream(ms);
-            img.Save(file);
+            // Save PNG without passing it to Image API
+            // TODO: Maybe use image processing library to correctly process PNG data
+            using var fs = File.Create(file);
+            fs.Write(data, 0, data.Length);
         }
 
         private static void ConvertFromDxt(string file, byte[] data, int width, int height, TextureFormat format)
